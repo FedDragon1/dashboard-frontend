@@ -1,0 +1,23 @@
+body {
+  font-family: Inter, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+  height: 100vh;
+  overflow: hidden;
+}
+#app {
+  height: 100%;
+}
+a {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  line-height: 1.2rem;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+}
+a:hover {
+  color: var(--el-color-primary);
+  transition: all 0.2s ease-in-out;
+  background-color: rgba(64,158,255,0.1);
+}
