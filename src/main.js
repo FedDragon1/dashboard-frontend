@@ -5,16 +5,25 @@ import { createApp } from 'vue'
 import { createWebHistory, createRouter } from "vue-router";
 
 import axios from "axios";
+import { createPinia } from 'pinia'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
 import IndexView from "@/views/IndexView.vue";
-import InstructorLoginView from "@/views/InstructorLoginView.vue";
-import AdminLoginView from "@/views/AdminLoginView.vue";
-import AdminDashboardView from "@/views/AdminDashboardView.vue";
-import InstructorDashboardView from "@/views/InstructorDashboardView.vue";
+import InstructorLoginView from "@/views/login/InstructorLoginView.vue";
+import AdminLoginView from "@/views/login/AdminLoginView.vue";
+import AdminInstructorsView from "@/views/admin/AdminInstructorsView.vue";
+import AdminCoursesView from "@/views/admin/AdminCoursesView.vue";
+import AdminAttendanceView from "@/views/admin/AdminAttendanceView.vue";
+import AdminStudentsView from "@/views/admin/AdminStudentsView.vue";
+import InstructorCoursesView from "@/views/instructor/InstructorCoursesView.vue";
+import InstructorCourseAttendanceView from "@/views/instructor/InstructorCourseAttendanceView.vue";
+import InstructorStudentProfileView from "@/views/instructor/InstructorStudentProfileView.vue";
+import AdminStudentProfileView from "@/views/admin/AdminStudentProfileView.vue";
+import {useUser} from "@/store";
 
 axios.defaults.baseURL = "http://localhost:8080/api"
+axios.defaults.withCredentials = true;
 
 const router = createRouter({
     history: createWebHistory(),
@@ -30,16 +39,38 @@ const router = createRouter({
         },
         {
             path: '/admin',
-            component: AdminDashboardView,
+            redirect: '/admin/instructor',
+            children: [
+                { path: '/admin/instructor', component: AdminInstructorsView },
+                { path: '/admin/course', component: AdminCoursesView },
+                { path: '/admin/attendance', component: AdminAttendanceView },
+                { path: '/admin/student', component: AdminStudentsView },
+                { path: '/admin/student/:studentUuid', component: AdminStudentProfileView }
+            ]
         },
         {
             path: '/instructor',
-            component: InstructorDashboardView
+            redirect: '/instructor/course',
+            children: [
+                { path: '/instructor/course', component: InstructorCoursesView },
+                { path: '/instructor/attendance/:courseUuid', component: InstructorCourseAttendanceView },
+                { path: '/instructor/student/:studentUuid', component: InstructorStudentProfileView }
+            ]
         }
     ]
 })
+const pinia = createPinia();
 
 createApp(App)
     .use(ElementPlus)
+    .use(pinia)
     .use(router)
     .mount('#app')
+
+const user = useUser();
+axios.post("/login/admin").then(r => r.data.success ? user.setAdmin(r.data.data) : null);
+axios.post("/login/instructor").then(r => r.data.success ? user.setInstructor(r.data.data) : null);
+
+
+
+
