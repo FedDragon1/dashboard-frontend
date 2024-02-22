@@ -10,8 +10,8 @@
 
 <script setup>
 
-import NavigationBar from "@/components/NavigationBar.vue";
-import NavBlock from "@/components/NavBlock.vue";
+import NavigationBar from "@/components/nav/NavigationBar.vue";
+import NavBlock from "@/components/nav/NavBlock.vue";
 </script>
 
 <style scoped>

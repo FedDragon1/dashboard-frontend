@@ -8,9 +8,9 @@
 
 <script setup>
 
-import Hero from "@/components/Hero.vue";
-import NavBlock from "@/components/NavBlock.vue";
-import NavigationBar from "@/components/NavigationBar.vue";
+import Hero from "@/components/misc/Hero.vue";
+import NavBlock from "@/components/nav/NavBlock.vue";
+import NavigationBar from "@/components/nav/NavigationBar.vue";
 </script>
 
 <style scoped>

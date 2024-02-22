@@ -1,6 +1,6 @@
 <script setup>
-import DebugNavBar from "@/components/DebugNavBar.vue";
-import NavBlock from "@/components/NavBlock.vue";
+import DebugNavBar from "@/components/nav/DebugNavBar.vue";
+import NavBlock from "@/components/nav/NavBlock.vue";
 </script>
 
 <template>

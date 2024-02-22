@@ -1,11 +1,4 @@
 <template>
-  <el-dialog v-model="errorDialogue.show" title="Error!" class="dialog">
-    <span>{{errorDialogue.message}}</span>
-    <template #footer>
-      <el-button @click="errorDialogue.show = false">Cancel</el-button>
-      <el-button @click="errorDialogue.show = false" type="primary">Confirm</el-button>
-    </template>
-  </el-dialog>
   <div class="center">
     <div class="form-wrapper auto-margin">
       <div class="form-img-dummy" :style="{ 'background-image': `url(${url})` }"></div>
@@ -23,7 +16,7 @@
 </template>
 
 <script setup>
-defineProps(["title", "url", "errorDialogue"])
+defineProps(["title", "url"])
 </script>
 
 <style scoped lang="stylus">

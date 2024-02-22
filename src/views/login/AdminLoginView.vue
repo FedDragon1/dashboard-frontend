@@ -2,7 +2,7 @@
   <NavigationBar>
     <router-link to="/login">Login</router-link>
   </NavigationBar>
-  <LoginForm title="Welcome" url="/src/assets/img/admin_login.png" :error-dialogue="errorDialogue">
+  <LoginForm title="Welcome" url="/src/assets/img/admin_login.png">
       <el-form :model="form" label-width="120px" class="login-form" label-position="top">
         <br>
         <el-form-item label="Username" >
@@ -24,18 +24,14 @@
 </template>
 
 <script setup>
-import LoginForm from '@/components/LoginForm.vue'
-import {reactive, ref, unref} from "vue";
+import LoginForm from '@/components/forms/LoginForm.vue'
+import {onMounted, reactive, ref, unref} from "vue";
 import axios from "axios";
 import Qs from 'qs';
 import {useRouter} from "vue-router";
 import {useUser} from "@/store";
-import NavigationBar from "@/components/NavigationBar.vue";
-
-const errorDialogue = reactive({
-  show: false,
-  message: ''
-})
+import NavigationBar from "@/components/nav/NavigationBar.vue";
+import {ElMessage} from "element-plus";
 
 const form = reactive({
   username: '',
@@ -49,8 +45,7 @@ function onFulfill(e) {
   const data = e.data;
   console.log(data);
   if (data.success === false) {
-    errorDialogue.show = true;
-    errorDialogue.message = data.error;
+    ElMessage.error(data.error);
     return;
   }
 
@@ -60,9 +55,9 @@ function onFulfill(e) {
 }
 
 function onSubmit() {
-  console.log(JSON.stringify(form));
-  axios.post("/login/admin", Qs.stringify(form)).then(onFulfill)
+  axios.post("/login/admin", Qs.stringify(form)).then(onFulfill).catch(e => ElMessage.error(e))
 }
+
 </script>
 
 <style scoped lang="stylus">

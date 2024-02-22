@@ -21,6 +21,7 @@ import InstructorCourseAttendanceView from "@/views/instructor/InstructorCourseA
 import InstructorStudentProfileView from "@/views/instructor/InstructorStudentProfileView.vue";
 import AdminStudentProfileView from "@/views/admin/AdminStudentProfileView.vue";
 import {useUser} from "@/store";
+import AdminCourseDetailView from "@/views/admin/AdminCourseDetailView.vue";
 
 axios.defaults.baseURL = "http://localhost:8080/api"
 axios.defaults.withCredentials = true;
@@ -45,7 +46,8 @@ const router = createRouter({
                 { path: '/admin/course', component: AdminCoursesView },
                 { path: '/admin/attendance', component: AdminAttendanceView },
                 { path: '/admin/student', component: AdminStudentsView },
-                { path: '/admin/student/:studentUuid', component: AdminStudentProfileView }
+                { path: '/admin/student/:studentUuid', component: AdminStudentProfileView },
+                { path: '/admin/course/:courseUuid', component: AdminCourseDetailView }
             ]
         },
         {
@@ -61,11 +63,13 @@ const router = createRouter({
 })
 const pinia = createPinia();
 
-createApp(App)
-    .use(ElementPlus)
-    .use(pinia)
-    .use(router)
-    .mount('#app')
+router.isReady().then(
+    createApp(App)
+        .use(ElementPlus)
+        .use(pinia)
+        .use(router)
+        .mount('#app')
+)
 
 const user = useUser();
 axios.post("/login/admin").then(r => r.data.success ? user.setAdmin(r.data.data) : null);

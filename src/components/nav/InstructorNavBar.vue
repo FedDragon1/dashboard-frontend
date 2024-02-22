@@ -6,8 +6,8 @@
 </template>
 
 <script setup>
-import NavBlock from "@/components/NavBlock.vue";
-import NavigationBar from "@/components/NavigationBar.vue";
+import NavBlock from "@/components/nav/NavBlock.vue";
+import NavigationBar from "@/components/nav/NavigationBar.vue";
 </script>
 
 <style scoped>

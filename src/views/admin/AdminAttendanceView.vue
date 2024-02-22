@@ -5,7 +5,7 @@ admin attendance
 
 <script setup>
 
-import AdminNavBar from "@/components/AdminNavBar.vue";
+import AdminNavBar from "@/components/nav/AdminNavBar.vue";
 </script>
 
 <style scoped>
