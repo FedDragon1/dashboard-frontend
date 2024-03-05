@@ -1,16 +1,7 @@
 <template>
-  <AdminNavBar/>
-  <ContentFramer :border="false" :top-margin="true" :style="{height: '70vh'}">
-    <AdminInfo current-page="Instructors"/>
-    <ContentFramer :style="{height: 'calc(100% - 10vh)', overflowY: 'scroll'}">
-      <Suspense>
-        <InstructorsTable api="/instructor"></InstructorsTable>
-        <template #fallback>
-          <Loading></Loading>
-        </template>
-      </Suspense>
-    </ContentFramer>
-  </ContentFramer>
+  <AdminTemplate subtitle="Instructors">
+    <InstructorsTable api="/instructor"></InstructorsTable>
+  </AdminTemplate>
 </template>
 
 <script setup>
@@ -21,6 +12,7 @@ import {defineAsyncComponent} from "vue";
 import Loading from "@/components/misc/Loading.vue";
 import {useUser} from "@/store";
 import {useRouter} from "vue-router";
+import AdminTemplate from "@/components/misc/AdminTemplate.vue";
 
 const InstructorsTable = defineAsyncComponent(() =>
   import('@/components/tables/InstructorsTable.vue')

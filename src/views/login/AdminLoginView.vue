@@ -2,7 +2,7 @@
   <NavigationBar>
     <router-link to="/login">Login</router-link>
   </NavigationBar>
-  <LoginForm title="Welcome" url="/src/assets/img/admin_login.png">
+  <LoginForm title="Welcome" url="/assets/img/admin_login.png">
       <el-form :model="form" label-width="120px" class="login-form" label-position="top">
         <br>
         <el-form-item label="Username" >
@@ -43,7 +43,6 @@ const userProfile = useUser();
 
 function onFulfill(e) {
   const data = e.data;
-  console.log(data);
   if (data.success === false) {
     ElMessage.error(data.error);
     return;

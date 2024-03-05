@@ -2,12 +2,13 @@
   <FetchError v-if="!data.success" :error="data.error" @click="loadData"></FetchError>
   <el-table v-else stripe :data="data.data" ref="form">
     <el-table-column prop="uuid" label="UUID" width="200"/>
-    <el-table-column label="Name">
-      <template #default="scope">
-        <el-input v-model="scope.row.updating.name" :value="scope.row.updating.name"
-                  :disabled="!scope.row.editable" class="revert-disable"/>
-      </template>
-    </el-table-column>
+    <EditableColumn field="name" label="Name"/>
+<!--    <el-table-column label="Name">-->
+<!--      <template #default="scope">-->
+<!--        <el-input v-model="scope.row.updating.name" :value="scope.row.updating.name"-->
+<!--                  :disabled="!scope.row.editable" class="revert-disable"/>-->
+<!--      </template>-->
+<!--    </el-table-column>-->
     <el-table-column label="Password">
       <template #default="scope">
         <el-input v-model="scope.row.updating.password" :value="scope.row.updating.password"
@@ -34,7 +35,7 @@
         <el-button link type="danger" v-if="scope.row.editable && scope.row.temp === undefined"
                    @click="revertEdit(scope)">Cancel</el-button>
         <el-button link type="primary" v-if="!scope.row.editable"
-                   @click="handleDetail(scope)">Detail</el-button>
+                   @click="router.push(`/admin/instructor/${scope.row.uuid}`)">Detail</el-button>
         <el-button link type="primary" v-if="!scope.row.editable"
                    @click="scope.row.editable = true">Edit</el-button>
         <el-button link type="danger" v-if="!scope.row.editable"
@@ -50,26 +51,24 @@
       <AppendBox @new="handleNew" :disabled="!(newInstructor === null)" />
     </template>
   </el-table>
-  {{data.data}}
+<!--  {{data.data}}-->
 </template>
 
 <script setup>
-import axios from "axios";
 import {ref} from "vue";
 import FetchError from "@/components/misc/FetchError.vue";
-import Qs from "qs";
 import { ElMessage } from 'element-plus'
 import AppendBox from "@/components/forms/AppendBox.vue";
 import useUuid from "@/utils/useUuid";
+import {useRouter} from "vue-router";
+import {useDelete, useGet, usePost, usePut} from '@/utils/useAxios'
+import EditableColumn from "@/components/tables/EditableColumn.vue";
 
 const props = defineProps(["api"]);
 const form = ref(null);
 const data = ref(null);
 const newInstructor = ref(null);
-
-function handleDetail(scope) {
-
-}
+const router = useRouter();
 
 function handleNew() {
   newInstructor.value = {
@@ -97,17 +96,11 @@ function handleCreate(scope) {
   }
 
   const entity = getInstructorEntity(scope.row);
-  axios.post(props.api, Qs.stringify(entity))
-      .then((r) => {
-        if (r.data.success === false) {
-          ElMessage.error(r.data.error)
-        }
-        ElMessage.success(`Created ${entity.uuid}`)
-        delete newInstructor.value.temp;
-        scope.row.editable = false;
-        newInstructor.value = null;
-      })
-      .catch(ElMessage.error)
+  usePost(props.api, entity, `Created ${entity.uuid}`, () => {
+    delete newInstructor.value.temp;
+    scope.row.editable = false;
+    newInstructor.value = null;
+  })
 }
 
 function revertNew() {
@@ -129,33 +122,20 @@ function handleEdit(scope) {
   }
 
   const updated = getInstructorEntity(scope.row);
-  axios.put(props.api, Qs.stringify(updated))
-      .then((r) => {
-        if (r.data.success === true) {
-          ElMessage({
-            message: "Update Success!",
-            type: 'success'
-          })
-        }
-      }).catch((e) => {
-        ElMessage.error(e)
-      }).finally(() => {
-        scope.row.editable = false;
-      })
+  usePut(
+      props.api, updated,
+      `Updated ${scope.row.uuid}`,
+      undefined, () => scope.row.editable = false
+  );
 }
 
 function handleDelete(scope) {
   const entity = getInstructorEntity(scope.row);
-  console.log(entity)
-  axios.delete(props.api, {params: entity})
-      .then((r) => {
-        if (r.data.success === true) {
-          ElMessage.success(`Deleted ${entity.uuid}`);
-          deleteLocalByUuid(entity.uuid);
-          return;
-        }
-        ElMessage.error(r.data.error);
-      })
+  useDelete(
+      props.api, entity,
+      `Deleted ${entity.uuid}`,
+      () => deleteLocalByUuid(entity.uuid)
+  );
 }
 
 function diffAndAssign(scope) {
@@ -188,23 +168,19 @@ function deleteLocalByUuid(uuid) {
       break;
     }
   }
-
-  console.log(i);
-
   data.value.data.splice(i, 1);
 }
 
 async function loadData() {
-  const resp = await axios.get(props.api);
-  console.log(resp);
-  for (const obj of resp.data.data) {
-    obj.updating = {
-      name: obj.name,
-      password: obj.password
+  data.value = await useGet(props.api, (resp) => {
+    for (const obj of resp.data.data) {
+      obj.updating = {
+        name: obj.name,
+        password: obj.password
+      }
+      obj.editable = false;
     }
-    obj.editable = false;
-  }
-  data.value = resp.data;
+  })
 }
 
 await loadData();

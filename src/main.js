@@ -1,5 +1,5 @@
 import App from './App.vue'
-import '@/assets/index.css'
+import '@/../public/assets/index.css'
 
 import { createApp } from 'vue'
 import { createWebHistory, createRouter } from "vue-router";
@@ -22,6 +22,7 @@ import InstructorStudentProfileView from "@/views/instructor/InstructorStudentPr
 import AdminStudentProfileView from "@/views/admin/AdminStudentProfileView.vue";
 import {useUser} from "@/store";
 import AdminCourseDetailView from "@/views/admin/AdminCourseDetailView.vue";
+import AdminInstructorDetailView from "@/views/admin/AdminInstructorDetailView.vue";
 
 axios.defaults.baseURL = "http://localhost:8080/api"
 axios.defaults.withCredentials = true;
@@ -47,7 +48,8 @@ const router = createRouter({
                 { path: '/admin/attendance', component: AdminAttendanceView },
                 { path: '/admin/student', component: AdminStudentsView },
                 { path: '/admin/student/:studentUuid', component: AdminStudentProfileView },
-                { path: '/admin/course/:courseUuid', component: AdminCourseDetailView }
+                { path: '/admin/course/:courseUuid', component: AdminCourseDetailView },
+                { path: '/admin/instructor/:instructorUuid', component: AdminInstructorDetailView }
             ]
         },
         {

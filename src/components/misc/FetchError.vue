@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <img src="/src/assets/img/error.png" alt="Error" width="100" height="100">
+    <img src="/assets/img/error.png" alt="Error" width="100" height="100">
     <span>Error: {{error}}</span>
     <el-button type="primary" dark @click="$emit('click')">Retry</el-button>
   </div>
