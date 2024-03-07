@@ -5,11 +5,7 @@
 </template>
 
 <script setup>
-import AdminNavBar from "@/components/nav/AdminNavBar.vue";
-import ContentFramer from "@/components/misc/ContentFramer.vue";
-import AdminInfo from "@/components/misc/AdminInfo.vue";
 import {defineAsyncComponent} from "vue";
-import Loading from "@/components/misc/Loading.vue";
 import {useUser} from "@/store";
 import {useRouter} from "vue-router";
 import AdminTemplate from "@/components/misc/AdminTemplate.vue";

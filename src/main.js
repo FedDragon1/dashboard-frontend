@@ -4,8 +4,8 @@ import '@/../public/assets/index.css'
 import { createApp } from 'vue'
 import { createWebHistory, createRouter } from "vue-router";
 
-import axios from "axios";
 import { createPinia } from 'pinia'
+import axios from '@/utils/useAxios';
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
@@ -24,8 +24,6 @@ import {useUser} from "@/store";
 import AdminCourseDetailView from "@/views/admin/AdminCourseDetailView.vue";
 import AdminInstructorDetailView from "@/views/admin/AdminInstructorDetailView.vue";
 
-axios.defaults.baseURL = "http://localhost:8080/api"
-axios.defaults.withCredentials = true;
 
 const router = createRouter({
     history: createWebHistory(),
@@ -74,6 +72,7 @@ router.isReady().then(
 )
 
 const user = useUser();
+
 axios.post("/login/admin").then(r => r.data.success ? user.setAdmin(r.data.data) : null);
 axios.post("/login/instructor").then(r => r.data.success ? user.setInstructor(r.data.data) : null);
 

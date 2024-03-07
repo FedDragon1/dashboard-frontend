@@ -63,6 +63,7 @@ import useUuid from "@/utils/useUuid";
 import {useRouter} from "vue-router";
 import {useDelete, useGet, usePost, usePut} from '@/utils/useAxios'
 import EditableColumn from "@/components/tables/EditableColumn.vue";
+import axios from 'axios';
 
 const props = defineProps(["api"]);
 const form = ref(null);
@@ -172,6 +173,7 @@ function deleteLocalByUuid(uuid) {
 }
 
 async function loadData() {
+  // debugger;
   data.value = await useGet(props.api, (resp) => {
     for (const obj of resp.data.data) {
       obj.updating = {

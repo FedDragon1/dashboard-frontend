@@ -2,6 +2,11 @@ import axios from "axios";
 import {ElMessage} from "element-plus";
 import Qs from "qs";
 
+axios.defaults.baseURL = "http://localhost:8080/api"
+axios.defaults.withCredentials = true;
+
+export default axios;
+
 export async function useGet(getApi, postProcessing) {
     try {
         const resp = await axios.get(getApi);
@@ -23,7 +28,7 @@ function handleAxios(api, method, data, successMsg, postProcessing, finallyFn) {
                 ElMessage.error(r.data.error);
                 return;
             } else if (postProcessing) {
-                postProcessing();
+                postProcessing(r);
             }
             ElMessage.success(successMsg);
         })
