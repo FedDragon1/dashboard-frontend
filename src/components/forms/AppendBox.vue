@@ -1,7 +1,7 @@
 <template>
 <ContentFramer :radius="false" :border="false">
   <div class="wrapper">
-    <el-button plain @click="$emit('new')" :disabled="disabled">Add Instructor</el-button>
+    <el-button plain @click="$emit('new')" :disabled="disabled">Add {{name}}</el-button>
   </div>
 </ContentFramer>
 </template>
@@ -9,7 +9,7 @@
 <script setup>
 import ContentFramer from "@/components/misc/ContentFramer.vue";
 
-defineProps(["disabled"])
+defineProps(["disabled", "name"])
 </script>
 
 <style scoped lang="stylus">

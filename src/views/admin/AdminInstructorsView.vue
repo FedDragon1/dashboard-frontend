@@ -1,6 +1,6 @@
 <template>
   <AdminTemplate subtitle="Instructors">
-    <InstructorsTable api="/instructor"></InstructorsTable>
+    <InstructorsTable api="/instructor" ></InstructorsTable>
   </AdminTemplate>
 </template>
 

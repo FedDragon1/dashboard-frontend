@@ -8,5 +8,6 @@ import NavBlock from "@/components/nav/NavBlock.vue";
   <router-view/>
 </template>
 
-<style scoped>
+<style scoped lang="stylus">
+
 </style>

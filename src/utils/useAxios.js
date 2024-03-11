@@ -7,7 +7,7 @@ axios.defaults.withCredentials = true;
 
 export default axios;
 
-export async function useGet(getApi, postProcessing) {
+export async function useGet(getApi, postProcessing, onError) {
     try {
         const resp = await axios.get(getApi);
         if (!resp.data.success) {
@@ -18,10 +18,11 @@ export async function useGet(getApi, postProcessing) {
         return resp.data;
     } catch (e) {
         ElMessage.error(e);
+        onError(e);
     }
 }
 
-function handleAxios(api, method, data, successMsg, postProcessing, finallyFn) {
+function handleAxios(api, method, data, successMsg, postProcessing, finallyFn, onError) {
     const a = axios[method](api, Qs.stringify(data))
         .then(r => {
             if (r.data.success === false) {
@@ -32,22 +33,25 @@ function handleAxios(api, method, data, successMsg, postProcessing, finallyFn) {
             }
             ElMessage.success(successMsg);
         })
-        .catch(ElMessage.error)
+        .catch(e => {
+            ElMessage.error(e);
+            onError(e);
+        })
 
     if (finallyFn) {
         a.finally(finallyFn);
     }
 }
 
-export function usePost(postApi, dataRef, successMsg, postProcessing, finallyFn) {
-    handleAxios(postApi, "post", dataRef, successMsg, postProcessing, finallyFn);
+export function usePost(postApi, dataRef, successMsg, postProcessing, finallyFn, onError) {
+    handleAxios(postApi, "post", dataRef, successMsg, postProcessing, finallyFn, onError);
 }
 
-export function usePut(putApi, dataRef, successMsg, postProcessing, finallyFn) {
-    handleAxios(putApi, "put", dataRef, successMsg, postProcessing, finallyFn);
+export function usePut(putApi, dataRef, successMsg, postProcessing, finallyFn, onError) {
+    handleAxios(putApi, "put", dataRef, successMsg, postProcessing, finallyFn, onError);
 }
 
-export function useDelete(deleteApi, dataRef, successMsg, postProcessing, finallyFn) {
+export function useDelete(deleteApi, dataRef, successMsg, postProcessing, finallyFn, onError) {
     const a = axios.delete(deleteApi, {params: dataRef})
         .then((r) => {
             if (r.data.success === false) {
@@ -58,7 +62,10 @@ export function useDelete(deleteApi, dataRef, successMsg, postProcessing, finall
             }
             ElMessage.success(successMsg);
         })
-        .catch(ElMessage.error)
+        .catch(e => {
+            ElMessage.error(e);
+            onError(e);
+        })
 
     if (finallyFn) {
         a.finally(finallyFn);
