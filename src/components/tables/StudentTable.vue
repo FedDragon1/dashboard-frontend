@@ -26,14 +26,14 @@
 
 import {useRouter} from "vue-router";
 import {ref, useAttrs} from "vue";
-import {useStudent} from "@/utils/useInstructor";
+import {useStudent} from "@/utils/useHandlers";
 import {useGet} from "@/utils/useAxios";
 import FetchError from "@/components/misc/FetchError.vue";
-import EditableColumn from "@/components/tables/EditableColumn.vue";
-import DropdownColumn from "@/components/tables/DropdownColumn.vue";
-import OperationColumn from "@/components/tables/OperationColumn.vue";
+import EditableColumn from "@/components/tables/columns/EditableColumn.vue";
+import DropdownColumn from "@/components/tables/columns/DropdownColumn.vue";
+import OperationColumn from "@/components/tables/columns/OperationColumn.vue";
 import AppendBox from "@/components/forms/AppendBox.vue";
-import TableColumn from "@/components/tables/TableColumn.vue";
+import TableColumn from "@/components/tables/columns/TableColumn.vue";
 import {useCourseTablePolicy, useStudentTablePolicy} from "@/utils/useTablePolicy";
 
 const props = defineProps({

@@ -18,7 +18,7 @@ export async function useGet(getApi, postProcessing, onError) {
         return resp.data;
     } catch (e) {
         ElMessage.error(e);
-        onError(e);
+        onError && onError(e);
     }
 }
 
@@ -35,7 +35,7 @@ function handleAxios(api, method, data, successMsg, postProcessing, finallyFn, o
         })
         .catch(e => {
             ElMessage.error(e);
-            onError(e);
+            onError && onError(e);
         })
 
     if (finallyFn) {
@@ -64,7 +64,7 @@ export function useDelete(deleteApi, dataRef, successMsg, postProcessing, finall
         })
         .catch(e => {
             ElMessage.error(e);
-            onError(e);
+            onError && onError(e);
         })
 
     if (finallyFn) {

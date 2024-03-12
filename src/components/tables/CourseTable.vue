@@ -24,13 +24,13 @@
 
 import {useRouter} from "vue-router";
 import {reactive, ref, useAttrs} from "vue";
-import {useCourse, useStudent} from "@/utils/useInstructor";
+import {useCourse, useStudent} from "@/utils/useHandlers";
 import {useGet} from "@/utils/useAxios";
 import FetchError from "@/components/misc/FetchError.vue";
-import EditableColumn from "@/components/tables/EditableColumn.vue";
-import OperationColumn from "@/components/tables/OperationColumn.vue";
+import EditableColumn from "@/components/tables/columns/EditableColumn.vue";
+import OperationColumn from "@/components/tables/columns/OperationColumn.vue";
 import AppendBox from "@/components/forms/AppendBox.vue";
-import TableColumn from "@/components/tables/TableColumn.vue";
+import TableColumn from "@/components/tables/columns/TableColumn.vue";
 import {useCourseTablePolicy} from "@/utils/useTablePolicy";
 
 const props = defineProps({

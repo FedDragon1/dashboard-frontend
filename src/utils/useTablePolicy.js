@@ -26,3 +26,17 @@ export function useStudentTablePolicy(updating) {
         ...updating
     });
 }
+
+export function useInstructorTablePolicy(updating) {
+    return reactive({
+        ...useTablePolicy("uuid", "name", "password", "courses"),
+        ...updating
+    })
+}
+
+export function useCourseMemberTablePolicy(updating) {
+    return reactive({
+        ...useTablePolicy("courseUuid", "courseName", "grade", "studentUuid"),
+        ...updating
+    })
+}

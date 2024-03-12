@@ -16,7 +16,7 @@
 
 <script setup>
 import {ref, useAttrs, useSlots} from "vue";
-import EditableColumn from "@/components/tables/EditableColumn.vue";
+import EditableColumn from "@/components/tables/columns/EditableColumn.vue";
 
 defineProps({
   editable: Boolean

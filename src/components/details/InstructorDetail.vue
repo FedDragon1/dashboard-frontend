@@ -4,8 +4,10 @@
     <h2 class="section-header">Instructor Info</h2>
     <el-table :data="instructorData.data" border>
       <TableColumn prop="uuid" label="UUID" width="200"/>
-      <TableColumn prop="name" label="Name"/>
-      <TableColumn prop="password" label="Password"/>
+      <TableColumn prop="name" label="Name"
+                   :editable="props.admin"/>
+      <TableColumn prop="password" label="Password"
+                   :editable="props.admin"/>
       <OperationColumn :callbacks="operations" edit width="200"/>
     </el-table>
 
@@ -16,10 +18,8 @@
     <h2 class="section-header">Courses</h2>
     <CourseTable :api="`/courses/instructor/${props.uuid}`" :column-policy="courseColumnPolicy"
                  hide-append border edit detail/>
-
-    <br>
-    {{ instructorData.data }}<br>
   </div>
+  <br>
 </template>
 
 <script setup>
@@ -27,14 +27,16 @@ import {defineAsyncComponent, reactive} from "vue";
 import {useUser} from "@/store";
 import {useGet} from "@/utils/useAxios";
 import FetchError from "@/components/misc/FetchError.vue";
-import EditableColumn from "@/components/tables/EditableColumn.vue";
-import OperationColumn from "@/components/tables/OperationColumn.vue";
-import {useInstructor} from "@/utils/useInstructor";
-import CourseTable from "@/components/tables/CourseTable.vue";
-import TableColumn from "@/components/tables/TableColumn.vue";
+import OperationColumn from "@/components/tables/columns/OperationColumn.vue";
+import {useInstructor} from "@/utils/useHandlers";
+import TableColumn from "@/components/tables/columns/TableColumn.vue";
 
 const StudentTable = defineAsyncComponent(() =>
     import('@/components/tables/StudentTable.vue')
+)
+
+const CourseTable = defineAsyncComponent(() =>
+    import('@/components/tables/CourseTable.vue')
 )
 
 const props = defineProps({

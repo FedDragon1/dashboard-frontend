@@ -61,18 +61,42 @@ const courseHandler = new EntityHandler({
     },
     name: {
         type: MUTABLE,
-        default: () => emptyString
+        default: emptyString
     },
     created: {
         type: MUTABLE,
-        default: () => emptyString
+        default: () => new Date().toJSON().slice(0, 10)
     },
     instructorUuid: {
         type: MUTABLE,
-        default: () => emptyString
+        default: emptyString
     }
 });
 
 export function useCourse() {
     return courseHandler;
+}
+
+const courseMemberHandler = new EntityHandler({
+    courseUuid: {
+        type: IMMUTABLE,
+        default: () => useUuid()
+    },
+    courseName: {
+        type: IMMUTABLE,
+        default: emptyString,
+        exist: false
+    },
+    grade: {
+        type: MUTABLE,
+        default: () => 0
+    },
+    studentUuid: {
+        type: IMMUTABLE,
+        default: emptyString
+    }
+});
+
+export function useCourseMember() {
+    return courseMemberHandler;
 }

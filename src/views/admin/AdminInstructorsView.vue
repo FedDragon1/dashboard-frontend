@@ -1,11 +1,12 @@
 <template>
   <AdminTemplate subtitle="Instructors">
-    <InstructorsTable api="/instructor" ></InstructorsTable>
+    <InstructorsTable api="/instructor" all
+                      :column-policy="instructorColumnPolicy"></InstructorsTable>
   </AdminTemplate>
 </template>
 
 <script setup>
-import {defineAsyncComponent} from "vue";
+import {defineAsyncComponent, reactive} from "vue";
 import {useUser} from "@/store";
 import {useRouter} from "vue-router";
 import AdminTemplate from "@/components/misc/AdminTemplate.vue";
@@ -15,6 +16,11 @@ const InstructorsTable = defineAsyncComponent(() =>
 )
 const router = useRouter();
 const user = useUser();
+
+const instructorColumnPolicy = reactive({
+  editableName: true,
+  editablePassword: true
+})
 
 if (user.admin === null) {
   router.push("/login/admin");
