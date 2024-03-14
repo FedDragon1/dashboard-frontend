@@ -92,6 +92,7 @@ export const MUTABLE = 0;
 export const IMMUTABLE = 1;
 export const emptyString = () => '';
 export const emptyList = () => [];
+export const currentDate = () => new Date().toJSON().slice(0, 10);
 
 export class EntityHandler {
     constructor(config) {

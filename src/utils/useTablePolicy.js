@@ -40,3 +40,17 @@ export function useCourseMemberTablePolicy(updating) {
         ...updating
     })
 }
+
+export function useAttendanceTablePolicy(updating) {
+    return reactive({
+        ...useTablePolicy("uuid", "date", "courseUuid", "records"),
+        ...updating
+    })
+}
+
+export function useAttendanceRecordTablePolicy(updating) {
+    return reactive({
+        ...useTablePolicy("id", "studentUuid", "attendanceUuid"),
+        ...updating
+    })
+}

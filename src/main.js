@@ -23,6 +23,7 @@ import AdminStudentProfileView from "@/views/admin/AdminStudentProfileView.vue";
 import {useUser} from "@/store";
 import AdminCourseDetailView from "@/views/admin/AdminCourseDetailView.vue";
 import AdminInstructorDetailView from "@/views/admin/AdminInstructorDetailView.vue";
+import AdminAttendanceDetailView from "@/views/admin/AdminAttendanceDetailView.vue";
 
 
 const router = createRouter({
@@ -45,6 +46,7 @@ const router = createRouter({
                 { path: '/admin/course', component: AdminCoursesView },
                 { path: '/admin/attendance', component: AdminAttendanceView },
                 { path: '/admin/student', component: AdminStudentsView },
+                { path: '/admin/attendance/:attendanceUuid', component: AdminAttendanceDetailView },
                 { path: '/admin/student/:studentUuid', component: AdminStudentProfileView },
                 { path: '/admin/course/:courseUuid', component: AdminCourseDetailView },
                 { path: '/admin/instructor/:instructorUuid', component: AdminInstructorDetailView }

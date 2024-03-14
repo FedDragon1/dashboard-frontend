@@ -1,11 +1,11 @@
-import {emptyList, emptyString, EntityHandler, IMMUTABLE, MUTABLE} from "@/utils/usePostFetch";
+import {currentDate, emptyList, emptyString, EntityHandler, IMMUTABLE, MUTABLE} from "@/utils/usePostFetch";
 import useUuid from "@/utils/useUuid";
 
 
 const instructorHandler = new EntityHandler({
     uuid: {
         type: IMMUTABLE,
-        default: () => useUuid()
+        default: useUuid
     },
     name: {
         type: MUTABLE,
@@ -29,7 +29,7 @@ export function useInstructor() {
 const studentHandler = new EntityHandler({
     uuid: {
         type: IMMUTABLE,
-        default: () => useUuid()
+        default: useUuid
     },
     name: {
         type: MUTABLE,
@@ -57,7 +57,7 @@ export function useStudent() {
 const courseHandler = new EntityHandler({
     uuid: {
         type: IMMUTABLE,
-        default: () => useUuid()
+        default: useUuid
     },
     name: {
         type: MUTABLE,
@@ -65,7 +65,7 @@ const courseHandler = new EntityHandler({
     },
     created: {
         type: MUTABLE,
-        default: () => new Date().toJSON().slice(0, 10)
+        default: currentDate
     },
     instructorUuid: {
         type: MUTABLE,
@@ -80,7 +80,7 @@ export function useCourse() {
 const courseMemberHandler = new EntityHandler({
     courseUuid: {
         type: IMMUTABLE,
-        default: () => useUuid()
+        default: useUuid
     },
     courseName: {
         type: IMMUTABLE,
@@ -99,4 +99,47 @@ const courseMemberHandler = new EntityHandler({
 
 export function useCourseMember() {
     return courseMemberHandler;
+}
+
+const attendanceHandler = new EntityHandler({
+    uuid: {
+        type: IMMUTABLE,
+        default: useUuid
+    },
+    date: {
+        type: MUTABLE,
+        default: currentDate
+    },
+    courseUuid: {
+        type: MUTABLE,
+        default: emptyString
+    },
+    records: {
+        type: IMMUTABLE,
+        default: emptyList,
+        exist: false
+    }
+})
+
+export function useAttendance() {
+    return attendanceHandler;
+}
+
+const attendanceRecordHandler = new EntityHandler({
+    id: {
+        type: IMMUTABLE,
+        default: () => Math.floor(Math.random() * 100_000_000),
+    },
+    studentUuid: {
+        type: MUTABLE,
+        default: emptyString
+    },
+    attendanceUuid: {
+        type: MUTABLE,
+        default: emptyString
+    }
+})
+
+export function useAttendanceRecord() {
+    return attendanceRecordHandler;
 }

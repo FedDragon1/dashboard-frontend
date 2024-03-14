@@ -23,7 +23,7 @@ import {useUser} from "@/store";
 import {useGet} from "@/utils/useAxios";
 import FetchError from "@/components/misc/FetchError.vue";
 import OperationColumn from "@/components/tables/columns/OperationColumn.vue";
-import {useCourseMember, useInstructor, useStudent} from "@/utils/useHandlers";
+import {useStudent} from "@/utils/useHandlers";
 import TableColumn from "@/components/tables/columns/TableColumn.vue";
 
 const CourseMemberTable = defineAsyncComponent(() =>
