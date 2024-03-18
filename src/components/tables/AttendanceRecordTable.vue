@@ -1,5 +1,5 @@
 <template>
-  <FetchError v-if="!data.success" :error="data.error" @click="handleNew"></FetchError>
+  <FetchError v-if="!data.success" :error="data.error" @click="loadData"></FetchError>
   <el-table v-else stripe :data="data.data" ref="form" :border="border">
     <TableColumn prop="id" label="ID" width="200"
                  :editable="columnPolicy.editableId"
@@ -20,7 +20,7 @@
 <script setup>
 import {useRouter} from "vue-router";
 import {ref, useAttrs} from "vue";
-import {useAttendanceRecord, useCourse} from "@/utils/useHandlers";
+import {useAttendanceRecord} from "@/utils/useHandlers";
 import {useGet} from "@/utils/useAxios";
 import FetchError from "@/components/misc/FetchError.vue";
 import OperationColumn from "@/components/tables/columns/OperationColumn.vue";

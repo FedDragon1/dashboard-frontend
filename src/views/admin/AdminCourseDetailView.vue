@@ -1,25 +1,16 @@
 <template>
-<AdminNavBar/>
-<ContentFramer :border="false" :top-margin="true" :style="{height: '70vh'}">
-  <AdminInfo current-page="Courses"/>
-  <ContentFramer :style="{height: 'calc(100% - 10vh)', overflowY: 'scroll'}">
-    <Suspense>
-      <InstructorsTable api="/instructor"></InstructorsTable>
-      <template #fallback>
-        <Loading></Loading>
-      </template>
-    </Suspense>
-  </ContentFramer>
-</ContentFramer>
+  <AdminTemplate :subtitle="`Course: ${$route.params.courseUuid}`">
+    <CourseDetail :admin="true" :uuid="$route.params.courseUuid"/>
+  </AdminTemplate>
 </template>
 
 <script setup>
+import AdminTemplate from "@/components/misc/AdminTemplate.vue";
+import {defineAsyncComponent} from "vue";
 
-import AdminNavBar from "@/components/nav/AdminNavBar.vue";
-import ContentFramer from "@/components/misc/ContentFramer.vue";
-import AdminInfo from "@/components/misc/AdminInfo.vue";
-import InstructorsTable from "@/components/tables/InstructorsTable.vue";
-import Loading from "@/components/misc/Loading.vue";
+const CourseDetail = defineAsyncComponent(() =>
+    import('@/components/details/CourseDetail.vue')
+)
 </script>
 
 <style scoped>

@@ -1,5 +1,5 @@
 <template>
-  <FetchError v-if="!data.success" :error="data.error" @click="handleNew"></FetchError>
+  <FetchError v-if="!data.success" :error="data.error" @click="loadData"></FetchError>
   <el-table v-else stripe :data="data.data" ref="form" :border="border">
     <TableColumn prop="courseUuid" label="Course UUID" width="200"
                  :editable="columnPolicy.editableCourseUuid"
