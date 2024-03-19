@@ -50,11 +50,11 @@ function onFulfill(e) {
 
   // success
   userProfile.setInstructor(data.data);
+  userProfile.setAdmin("admin");
   router.push("/instructor")
 }
 
 function onSubmit() {
-  console.log(JSON.stringify(form));
   axios.post("/login/instructor", Qs.stringify(form))
       .then(onFulfill).catch(e => ElMessage.error(e))
 }

@@ -16,9 +16,6 @@ import AdminInstructorsView from "@/views/admin/AdminInstructorsView.vue";
 import AdminCoursesView from "@/views/admin/AdminCoursesView.vue";
 import AdminAttendanceView from "@/views/admin/AdminAttendanceView.vue";
 import AdminStudentsView from "@/views/admin/AdminStudentsView.vue";
-import InstructorCoursesView from "@/views/instructor/InstructorCoursesView.vue";
-import InstructorCourseAttendanceView from "@/views/instructor/InstructorCourseAttendanceView.vue";
-import InstructorStudentProfileView from "@/views/instructor/InstructorStudentProfileView.vue";
 import AdminStudentProfileView from "@/views/admin/AdminStudentProfileView.vue";
 import {useUser} from "@/store";
 import AdminCourseDetailView from "@/views/admin/AdminCourseDetailView.vue";
@@ -54,12 +51,7 @@ const router = createRouter({
         },
         {
             path: '/instructor',
-            redirect: '/instructor/course',
-            children: [
-                { path: '/instructor/course', component: InstructorCoursesView },
-                { path: '/instructor/attendance/:courseUuid', component: InstructorCourseAttendanceView },
-                { path: '/instructor/student/:studentUuid', component: InstructorStudentProfileView }
-            ]
+            redirect: '/admin',
         }
     ]
 })
