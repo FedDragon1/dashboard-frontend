@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Hello, {{userProfile.instructor.name ?? userProfile.admin}}</h1>
+    <h1>Hello, {{userProfile.instructor?.name ?? userProfile.admin}}</h1>
     <h2>{{currentPage}}</h2>
   </div>
 </template>
